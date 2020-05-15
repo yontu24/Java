@@ -1,16 +1,12 @@
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 public class ControlPanel extends JPanel implements ActionListener {
     final MainFrame frame;
-    JButton saveBtn = new JButton("Save to XML File");
-    JButton loadBtn = new JButton("Load from XML File");
     JButton exitBtn = new JButton("Exit");
     JButton addComponent = new JButton("Add component");
 
@@ -19,7 +15,6 @@ public class ControlPanel extends JPanel implements ActionListener {
     JTextField textField;
 
     JTextArea log = new JTextArea(5, 10);
-    JFileChooser fc = new JFileChooser();
     JScrollPane logScrollPane = new JScrollPane(log);
 
     public ControlPanel(MainFrame frame) {
@@ -33,12 +28,8 @@ public class ControlPanel extends JPanel implements ActionListener {
 
         add(componentText);
         add(addComponent);
-        add(saveBtn);
-        add(loadBtn);
         add(exitBtn);
         add(logScrollPane, BorderLayout.CENTER);
-        saveBtn.addActionListener(this);
-        loadBtn.addActionListener(this);
         exitBtn.addActionListener(this);
         addComponent.addActionListener(this);
     }
@@ -46,58 +37,8 @@ public class ControlPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
 
-        // filtru pt a recnoaste doar imaginile png
-        fc.setFileFilter(new FileFilter() {
-
-            public String getDescription() {
-                return "XML File (*.xml)";
-            }
-
-            public boolean accept(File f) {
-                if (f.isDirectory()) {
-                    return true;
-                } else {
-                    String filename = f.getName().toLowerCase();
-                    return filename.endsWith(".xml");
-                }
-            }
-        });
-
         if (actionEvent.getSource() == exitBtn)
             System.exit(0);
-        else if (actionEvent.getSource() == saveBtn)
-        {
-            int returnVal = fc.showSaveDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File filePath = new File(fc.getSelectedFile() + ".xml");
-
-                //frame.designPanel.SaveToXML(filePath);
-
-                //This is where a real application would save the file.
-                log.append("Saving: " + filePath.getName() + "\n");
-            }
-            else {
-                log.append("Save command cancelled by user.\n");
-            }
-            log.setCaretPosition(log.getDocument().getLength());
-        }
-        else if(actionEvent.getSource() == loadBtn)
-        {
-            int returnVal = fc.showOpenDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File filePath = new File(String.valueOf(fc.getSelectedFile()));
-
-                //frame.designPanel.loadFromXML(filePath);
-
-                log.append("Loading: " + filePath.getName() + "\n");
-            }
-            else {
-                log.append("Load command cancelled by user.\n");
-            }
-            log.setCaretPosition(log.getDocument().getLength());
-        }
         else if(actionEvent.getSource() == addComponent)
         {
             String selected = Objects.requireNonNull(componentText.getSelectedItem()).toString();
