@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<root>
+    <quiz>
+        <question right_answer="0">Cat e ceasul?</question>
+        <answers>3:05@Nu stiu@4:05</answers>
+    </quiz>
+    <quiz>
+        <question right_answer="1">Care e materia ta preferata?</question>
+        <answers>TW@AP@IP@AIIT</answers>
+    </quiz>
+    <quiz>
+        <question right_answer="2">Ce reprezinta 2 + 3?</question>
+        <answers>O adunare@Un rezultat@5@Nu stiu</answers>
+    </quiz>
+    <quiz>
+        <question right_answer="0">Cat face 10 + 10?</question>
+        <answers>20@10@21@100</answers>
+    </quiz>
+</root>
